@@ -1,0 +1,28 @@
+Instruction to build CVE Summary Report
+
+
+1. Get the raw "cvs_fixed_<release1>_to_<releas2>.xlsx file from Tom Kelley.
+2. Put each of these file under "input/<release1>_-to-<release2> folder
+3. Extract all the components tabs from thje xlsx into its own <component>.csv file. This is done following instruction doc "Batch save or export each sheet as CSV file with VBA".
+
+
+Here is quick instruction:
+Step a. Press Alt + F11 keys simultaneously to open the Microsoft Visual Basic for Application window.
+Step b. Click Insert > Module, and then paste following VBA code into the new module window.
+
+Run this program:
+
+=======================================
+Public Sub SaveWorksheetsAsCsv()
+Dim xWs As Worksheet
+Dim xDir As String
+Dim folder As FileDialog
+Set folder = Application.FileDialog(msoFileDialogFolderPicker)
+If folder.Show <> -1 Then Exit Sub
+xDir = folder.SelectedItems(1)
+For Each xWs In Application.ActiveWorkbook.Worksheets
+xWs.SaveAs xDir & "\" & xWs.Name, xlCSV
+Next
+End Sub
+=========================================
+
